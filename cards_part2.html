@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Module 4 Lab Exercise #2</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #e3f2fd;
+        }
+
+        .card {
+            padding: 10px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 3em;
+            padding: 0 0 10px 0;
+        }
+
+        .card-description {
+            font-weight: 400;
+            font-size: 2em
+        }
+    </style>
+</head>
+
+<body>
+    <template id="card-template">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title"></div>
+                <div class="card-text"></div>
+            </div>
+        </div>
+    </template>
+
+    <h1>Module 4 Lab Exercise #2 - Part 2</h1>
+    <div id="card-list"></div>
+
+    <script>
+
+        const data = [{name: 'bob', age: 23}, {name: 'alice', age: 39}]
+
+        function addCard(title, text) {
+            // clone the template
+            const template = document.getElementById("card-template").content.cloneNode(true);
+
+            // populate the template
+            template.querySelector('.card-title').innerText = title;
+            template.querySelector('.card-text').innerText = text;
+
+            // include the populated template into the page
+            document.querySelector('#card-list').appendChild(template);
+        }
+
+        data.forEach(item => addCard(item.name, item.age));
+    </script>
+</body>
+
+</html>
