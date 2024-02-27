@@ -1,0 +1,84 @@
+<html>
+
+<head>
+    <title>Moment Lab</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+</head>
+
+<body>
+    <h2>Days Since My Birthday</h4>
+    <div id="daysSinceMyBirthday"></div>
+
+    <h3>Days, Years & Months Since My Birthday</h4>
+    <div id="daysYearsMonthsSinceMyBirthday"></div>
+
+    <h3>Which Day is Closer?</h4>
+    <div id="closerDate"></div>
+
+    <h3>Which Date Came Before?</h4>
+    <div id="previousDate"></div>
+
+    <h3>The Current Time in London</h4>
+    <div id="londonTime"></div>
+
+    <script type="text/javascript">
+        
+        let nowMoment = moment();
+
+        const birthday = '09/03/1987'
+        let birthdayDate = moment(birthday, 'DD/MM/YYYY');
+        const daysDifference = nowMoment.diff(birthdayDate, 'days')
+        
+        let displayBirthday = document.getElementById('daysSinceMyBirthday');
+        displayBirthday.innerText = `${daysDifference} days since ${birthdayDate}`;
+
+        const duration = moment.duration(nowMoment.diff(birthdayDate));
+        const years = duration.years();
+        const months = duration.months();
+        const days = duration.days();
+        let fullDisplayBirthday = document.getElementById('daysYearsMonthsSinceMyBirthday');
+        fullDisplayBirthday.innerText = `${years} years, ${months} months & ${days} days since my date of birth.` // close approximation
+
+        const closerDateFx = (date1, date2) => {
+            let dateA = moment(date1, "DD/MM/YYYY");
+            let dateB = moment(date2, "DD/MM/YYYY");
+
+            let diffA = nowMoment.diff(dateA, "days");
+            let diffB = nowMoment.diff(dateB, "days");
+
+            if (diffA < 0) {
+                diffA = diffA * -1;
+            }
+            if (diffB < 0) {
+                diffB = diffB * -1;
+            }
+
+            return `${diffA > diffB ? dateB : dateA} is closer than ${diffA > diffB ? dateA : dateB} compared to ${nowMoment}`;
+        };
+        let closerDate = document.getElementById('closerDate');
+        closerDate.innerText = closerDateFx('01/01/1970', '04/04/2038')
+
+        const previousDateFx = (date1, date2) => {
+            let dateA = moment(date1, "DD/MM/YYYY");
+            let dateB = moment(date2, "DD/MM/YYYY");
+
+            if (dateA.isBefore(dateB)) {
+                return `The date ${dateA} is before ${dateB}`
+            }
+            else {
+                return `The date ${dateB} is before ${dateA}`
+            }
+        };
+        const previousDate = document.getElementById('previousDate');
+        previousDate.innerText = previousDateFx("02/02/1949", "11/06/2000");
+
+        const londonUTCOffset = 1; 
+        const timeInLondon = nowMoment.clone().utcOffset(londonUTCOffset); 
+
+        const londonTime = document.getElementById('londonTime');
+        londonTime.innerText = `${timeInLondon.format('DD/MM/YYYY HH:mm:ss')} is the time in London`;
+
+    </script>
+</body>
+
+</html>
